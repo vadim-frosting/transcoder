@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/floostack/transcoder"
-	"github.com/floostack/transcoder/utils"
+	transcoder "cupcake.studio/frosting-transcoder"
+	"cupcake.studio/frosting-transcoder/utils"
 )
 
 // Transcoder ...
@@ -81,6 +81,8 @@ func (t *Transcoder) Start(opts transcoder.Options) (<-chan transcoder.Progress,
 		}
 	}
 
+	fmt.Printf("starting trancoding with args: %s\n", args)
+
 	// Initialize command
 	cmd := exec.Command(t.config.FfmpegBinPath, args...)
 
@@ -116,6 +118,21 @@ func (t *Transcoder) Start(opts transcoder.Options) (<-chan transcoder.Progress,
 	}
 
 	return out, nil
+}
+
+//Concatenate multiple files into one ...
+func (t *Transcoder) Concatenate(inputFileList string, outputFile string) (err error) {
+	args := append([]string{"-f", "concat", "-i", inputFileList, "-c", "copy", outputFile})
+	fmt.Printf("configure concatenation with arguments %s\n", args)
+	// Initialize command
+	cmd := exec.Command(t.config.FfmpegBinPath, args...)
+	// Start process
+	err = cmd.Start()
+	if err != nil {
+		return fmt.Errorf("Failed starting concatenation (%s) with args (%s) with error %s\n", t.config.FfmpegBinPath, args, err)
+	}
+	err = cmd.Wait()
+	return err
 }
 
 // Input ...
@@ -192,7 +209,7 @@ func (t *Transcoder) validate() error {
 }
 
 // GetMetadata Returns metadata for the specified input file
-func (t *Transcoder) GetMetadata() ( transcoder.Metadata, error) {
+func (t *Transcoder) GetMetadata() (transcoder.Metadata, error) {
 
 	if t.config.FfprobeBinPath != "" {
 		var outb, errb bytes.Buffer

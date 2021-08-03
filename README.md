@@ -34,7 +34,7 @@
 ## Download from Github
 
 ```shell
-go get github.com/floostack/transcoder
+go get cupcake.studio/frosting-transcoder
 ```
 
 ## Example
@@ -45,7 +45,7 @@ package main
 import (
 	"log"
 
-	ffmpeg "github.com/floostack/transcoder/ffmpeg"
+	ffmpeg "cupcake.studio/frosting-transcoder/ffmpeg"
 )
 
 func main() {
