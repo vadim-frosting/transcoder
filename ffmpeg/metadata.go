@@ -1,6 +1,6 @@
 package ffmpeg
 
-import "cupcake.studio/frosting-transcoder"
+import "github.com/vadim-frosting/transcoder"
 
 // Metadata ...
 type Metadata struct {

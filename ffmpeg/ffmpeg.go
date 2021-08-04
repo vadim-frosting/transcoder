@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 
-	transcoder "cupcake.studio/frosting-transcoder"
-	"cupcake.studio/frosting-transcoder/utils"
+	transcoder "github.com/vadim-frosting/transcoder"
+	"github.com/vadim-frosting/transcoder/utils"
 )
 
 // Transcoder ...
